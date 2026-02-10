@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "970394434679",
+    "project_id": "corides-sineix",
+    "storage_bucket": "corides-sineix.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:970394434679:android:71edb2d58492311d849a72",
+        "android_client_info": {
+          "package_name": "com.sineix.corides"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhip6G4d3Sx5irpHGQu3frE_r06xXElUY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

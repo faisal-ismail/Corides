@@ -1,0 +1,562 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoRides.ai | Intelligent Community Ride-Sharing</title>
+    <meta name="description"
+        content="CoRides.ai - A revolutionary ride-sharing platform powered by Gemini 3. Connecting communities through smart, AI-driven orchestration.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #4285F4;
+            --secondary: #9171E5;
+            --accent: #F4AFBA;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --glass: rgba(255, 255, 255, 0.05);
+            --gradient: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Particles Background */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            width: 100%;
+            height: 100%;
+        }
+
+        header {
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            opacity: 0.8;
+        }
+
+        nav a:hover {
+            opacity: 1;
+            color: var(--primary);
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 5%;
+            background: radial-gradient(circle at center, rgba(66, 133, 244, 0.15) 0%, transparent 70%);
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+
+        .hero h1 span {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin-bottom: 2.5rem;
+            opacity: 0.8;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: white;
+            box-shadow: 0 10px 20px rgba(66, 133, 244, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(66, 133, 244, 0.4);
+        }
+
+        .btn-outline {
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            background: rgba(66, 133, 244, 0.1);
+            transform: translateY(-2px);
+        }
+
+        section {
+            padding: 8rem 5%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-title .divider {
+            width: 80px;
+            height: 4px;
+            background: var(--gradient);
+            margin: 0 auto;
+            border-radius: 2px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .feature-card {
+            background: var(--glass);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .mockup-section {
+            display: flex;
+            align-items: center;
+            gap: 5rem;
+            flex-wrap: wrap;
+        }
+
+        .mockup-image {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+        }
+
+        .mockup-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .mockup-content {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .mockup-content h3 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stats-bar {
+            background: var(--gradient);
+            padding: 4rem 5%;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-item h4 {
+            font-size: 3rem;
+            font-weight: 700;
+        }
+
+        .stat-item p {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.9;
+        }
+
+        .hackathon-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0.5rem 1.2rem;
+            background: rgba(244, 175, 186, 0.1);
+            border: 1px solid var(--accent);
+            border-radius: 50px;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+
+        footer {
+            padding: 4rem 5%;
+            background: #020617;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        footer p {
+            opacity: 0.5;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            header nav {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+
+            .mockup-section {
+                text-align: center;
+                flex-direction: column-reverse;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate {
+            animation: fadeUp 1s forwards;
+        }
+
+        .delay-1 {
+            animation-delay: 0.2s;
+        }
+
+        .delay-2 {
+            animation-delay: 0.4s;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">
+            <img src="assets/logo.png" alt="CoRides.ai Logo">
+            CoRides.ai
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#demo">Demo</a></li>
+                <li><a href="#impact">Impact</a></li>
+                <li><a href="#github">Github</a></li>
+                <li><a href="#download">Download</a></li>
+            </ul>
+        </nav>
+        <a href="#download" class="btn btn-outline" style="padding: 0.6rem 1.5rem; font-size: 0.9rem;">Get Started</a>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hackathon-badge">
+                <span style="font-size: 1.2rem;">🚀</span> Built for Gemini 3 Hackathon | Powered by Gemini 3
+            </div>
+            <h1 class="animate">Intelligent Rides.<br><span>Smarter Community.</span></h1>
+            <p class="animate delay-1">CoRides.ai is a revolutionary carpooling platform powered by Gemini 3. We turn
+                every daily commute into a community-driven asset through conversational AI orchestration.</p>
+            <div class="cta-group animate delay-2">
+                <a href="#download" class="btn btn-primary">
+                    <svg width="20" height="20" fill="white" viewBox="0 0 24 24">
+                        <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"></path>
+                    </svg>
+                    Download APK
+                </a>
+                <a href="#github" class="btn btn-outline">
+                    <svg width="20" height="20" fill="white" viewBox="0 0 24 24">
+                        <path
+                            d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12">
+                        </path>
+                    </svg>
+                    Github Source
+                </a>
+            </div>
+        </section>
+
+        <section id="features">
+            <div class="section-title">
+                <h2>AI-Powered Innovation</h2>
+                <div class="divider"></div>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">🎙️</span>
+                    <h3>Conversational First</h3>
+                    <p>No more complex forms. Simply tell Gemini where you want to go, and it handles the booking,
+                        matching, and negotiation for you.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🚗</span>
+                    <h3>Dual-Mode Mobility</h3>
+                    <p>Earn as a Driver by sharing empty seats, or save as a Passenger with trusted community rides.
+                        Switch roles with one tap.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🛡️</span>
+                    <h3>Trust &amp; Safety</h3>
+                    <p>Verified phone authentication, real-time tracking, and peer-to-peer ratings ensure every ride is
+                        secure and reliable.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="mockup-section" style="background: rgba(255, 255, 255, 0.02);">
+            <div class="mockup-image">
+                <img src="assets/ai_feature.png" alt="Gemini Assistant Feature">
+                <div
+                    style="position: absolute; top: -20px; right: -20px; background: var(--gradient); padding: 10px 20px; border-radius: 10px; font-weight: bold;">
+                    AI Active</div>
+            </div>
+            <div class="mockup-content">
+                <h3>Meet Your Personal Ride Assistant</h3>
+                <p>Powered by the latest Gemini 3 model, our assistant doesn't just process data—it understands intent.
+                    Whether you're offering a ride or looking for one, the AI proactively matches you with the best
+                    peers based on your routine, budget, and route.</p>
+                <ul style="margin: 2rem 0; list-style: none;">
+                    <li style="margin-bottom: 1rem; display: flex; gap: 10px;"><span
+                            style="color: var(--primary);">✓</span> Smart Route Matching</li>
+                    <li style="margin-bottom: 1rem; display: flex; gap: 10px;"><span
+                            style="color: var(--primary);">✓</span> Automated Price Negotiation</li>
+                    <li style="margin-bottom: 1rem; display: flex; gap: 10px;"><span
+                            style="color: var(--primary);">✓</span> Natural Language Interface</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="demo">
+            <div class="section-title">
+                <h2>Product Walkthrough</h2>
+                <p>See CoRides.ai in action. Watch how our AI assistant streamlines the ride-sharing experience.</p>
+                <div class="divider"></div>
+            </div>
+            <div style="max-width: 1000px; margin: 0 auto; position: relative;">
+                <div
+                    style="padding: 56.25% 0 0 0; position: relative; border-radius: 20px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);">
+                    <iframe
+                        src="https://player.vimeo.com/video/REPLACE_WITH_YOUR_VIMEO_ID?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                        frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
+                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+                        title="CoRides.ai App Demo">
+                    </iframe>
+                </div>
+                <script src="https://player.vimeo.com/api/player.js"></script>
+            </div>
+        </section>
+
+        <section id="impact"
+            style="background: radial-gradient(circle at bottom right, rgba(66, 133, 244, 0.1), transparent);">
+            <div class="section-title">
+                <h2>The Global Impact</h2>
+                <p>CoRides.ai isn't just about sharing a car; it's about solving real-world systemic challenges.</p>
+                <div class="divider"></div>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">🌿</span>
+                    <h3>The Planet</h3>
+                    <p>By optimizing seat occupancy, we directly reduce the number of vehicles on the road, lowering CO2
+                        emissions and urban smog.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">📉</span>
+                    <h3>The Economy</h3>
+                    <p>Turning private vehicles from liabilities into income-generating assets, helping drivers offset
+                        rising fuel and maintenance costs.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🚦</span>
+                    <h3>The City</h3>
+                    <p>Decentralized ride-sharing fills the gaps in public transport, reducing traffic congestion in
+                        high-density urban areas.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🤝</span>
+                    <h3>The Community</h3>
+                    <p>Rebuilding social capital by connecting neighbors and colleagues through safe, shared, and
+                        interactive journeys.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="github">
+            <div class="section-title">
+                <h2>Open Source Contribution</h2>
+                <p>CoRides.ai is built with the developer community in mind. Explore our stack and contribute to the
+                    future of carpooling.</p>
+                <div class="divider" style="margin-top: 1rem;"></div>
+            </div>
+            <div style="text-align: center;">
+                <p style="margin-bottom: 2rem; opacity: 0.7;">Check out our clean, modular Flutter architecture and
+                    Firebase integration.</p>
+                <a href="https://github.com/yourusername/corides" class="btn btn-outline" target="_blank">View on
+                    Github</a>
+            </div>
+        </section>
+
+        <section id="download"
+            style="background: radial-gradient(circle at top, rgba(145, 113, 229, 0.2), transparent);">
+            <div class="section-title">
+                <h2>Ready to Start Your Journey?</h2>
+                <div class="divider"></div>
+            </div>
+            <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+                <div class="feature-card" style="border-width: 2px;">
+                    <h3>Get CoRides.ai for Android</h3>
+                    <p style="margin-bottom: 2rem;">Download the latest preview APK and experience the future of
+                        community ride-sharing today.</p>
+                    <a href="assets/corides.apk" class="btn btn-primary" download="">Download APK (v1.0.0)</a>
+                    <p style="margin-top: 1.5rem; font-size: 0.8rem; opacity: 0.5;">Compatible with Android 8.0 and
+                        above.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="logo" style="justify-content: center; margin-bottom: 2rem;">
+            <img src="assets/logo.png" alt="CoRides.ai Logo">
+            CoRides.ai
+        </div>
+        <div class="footer-social">
+            <a href="#">Twitter</a>
+            <a href="#">LinkedIn</a>
+            <a href="https://gemini3.devpost.com/" target="_blank">Devpost</a>
+        </div>
+        <p>© 2026 CoRides.ai. Built for the Gemini 3 Hackathon powered by Gemini 3.</p>
+    </footer>
+
+
+
+</body>
+
+</html>
