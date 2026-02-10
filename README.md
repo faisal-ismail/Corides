@@ -3,7 +3,7 @@
 [![Flutter](https://img.shields.io/badge/Flutter-3.10+-02569B?logo=flutter)](https://flutter.dev)
 [![Firebase](https://img.shields.io/badge/Firebase-Enabled-FFCA28?logo=firebase)](https://firebase.google.com)
 [![Gemini AI](https://img.shields.io/badge/Gemini-AI%20Powered-4285F4?logo=google)](https://ai.google.dev)
-[![License](https://img.shields.io/badge/License-Private-red)]()
+
 
 **CoRides** is a revolutionary ride-sharing application that leverages **Google Gemini AI** as an active orchestration agent. Unlike traditional ride-sharing apps, CoRides allows users to negotiate rides through natural voice and text conversations, with AI intelligently matching riders with drivers based on multi-stop route proximity and negotiated prices.
 
