@@ -28,10 +28,6 @@
 - **Message History**: Complete conversation logs for all interactions
 - **Context Awareness**: AI remembers conversation context for seamless booking
 
-### 💰 **Wallet & Payments**
-- **Built-in Wallet System**: Track earnings and expenses
-- **Ledger-Based Transactions**: Transparent payment records
-- **Cash & Wallet Options**: Flexible payment methods
 
 ### 🔐 **Authentication**
 - **Firebase Phone Auth**: Secure OTP-based authentication
